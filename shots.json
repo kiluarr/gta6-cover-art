@@ -1,5 +1,1 @@
-[
-  { "name": "1-cover.jpg", "query": "?shot=cover&photo=pier&caption=Sunset%20Heist", "w": 1080, "h": 1080 },
-  { "name": "2-editor.jpg", "query": "?shot=editor&photo=boulevard&caption=Boulevard%20Queen", "w": 1280, "h": 720 },
-  { "name": "3-cover.jpg", "query": "?shot=cover&photo=boulevard&caption=Boulevard%20Queen", "w": 1080, "h": 1080 }
-]
+[{"h":1080,"name":"1-cover.jpg","query":"?shot=cover&photo=boulevard&caption=VICE%20CITY%20NIGHTS&layout=hero-three&grade=sunset&size=1920x1080&subtitle=chasing%20the%20sunset","w":1920},{"h":1650,"name":"2-editor.jpg","query":"?shot=editor&photo=boulevard&caption=VICE%20CITY%20NIGHTS","w":1280},{"h":1350,"name":"3-cover-portrait.jpg","query":"?shot=cover&photo=pier&caption=PIER%20PRESSURE&layout=grid4&grade=neon&size=1080x1350&subtitle=neon%20on%20the%20water","w":1080},{"h":1080,"name":"4-cover-square.jpg","query":"?shot=cover&photo=boulevard&caption=BOULEVARD%20QUEEN&layout=grid9&grade=gold&size=1080x1080&subtitle=golden%20hour%20royalty","w":1080}]

@@ -3,20 +3,81 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cover Snap</title>
+<title>Vice Cover Lab — GTA-style cover maker</title>
 <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 <main class="app">
-  <section class="controls">
-    <h1>Cover Snap</h1>
-    <p>A photo and a caption, made into a square cover.</p>
-    <label>Photo <input id="photo" type="file" accept="image/*"></label>
-    <label>Caption <input id="caption" type="text" maxlength="40" value="Sunset Heist"></label>
-    <button id="export" type="button">Export PNG 1080 x 1080</button>
-    <p id="status" role="status"></p>
+  <section class="panel" aria-label="Cover controls">
+    <h1>Vice Cover Lab</h1>
+    <p class="tag">Turn any photo into a sunset-neon poster cover. Photos never leave this machine.</p>
+
+    <fieldset>
+      <legend>1 · Photos</legend>
+      <label class="filebtn">Add photos
+        <input id="photos" type="file" accept="image/*" multiple>
+      </label>
+      <p class="hint">Up to 4 photos. One photo can fill every panel, or each panel can take its own.</p>
+      <div id="photolist" class="photolist"></div>
+      <label>Photo for the selected panel
+        <select id="panelphoto"></select>
+      </label>
+      <label>Zoom <span id="zoomval">100%</span>
+        <input id="zoom" type="range" min="50" max="300" value="100">
+      </label>
+      <label>Move sideways
+        <input id="panx" type="range" min="-100" max="100" value="0">
+      </label>
+      <label>Move up / down
+        <input id="pany" type="range" min="-100" max="100" value="0">
+      </label>
+      <p class="hint">Click a panel on the preview to select it, then crop it with the sliders above.</p>
+    </fieldset>
+
+    <fieldset>
+      <legend>2 · Layout</legend>
+      <div id="layouts" class="choices" role="group" aria-label="Layout"></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>3 · Colour grade</legend>
+      <div id="grades" class="choices" role="group" aria-label="Colour grade"></div>
+      <label class="check"><input id="grain" type="checkbox" checked> Film grain</label>
+      <label class="check"><input id="vignette" type="checkbox" checked> Vignette</label>
+    </fieldset>
+
+    <fieldset>
+      <legend>4 · Words</legend>
+      <label>Title
+        <input id="title" type="text" maxlength="28" value="VICE CITY NIGHTS">
+      </label>
+      <label>Subtitle (neon script)
+        <input id="subtitle" type="text" maxlength="40" value="chasing the sunset">
+      </label>
+      <label>Title size
+        <input id="titlesize" type="range" min="60" max="160" value="110">
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>5 · Export</legend>
+      <label>Size
+        <select id="exportsize">
+          <option value="1080x1080">Square · 1080 × 1080</option>
+          <option value="1080x1350">Portrait · 1080 × 1350</option>
+          <option value="1920x1080" selected>Wide · 1920 × 1080</option>
+        </select>
+      </label>
+      <button id="export" type="button">Download PNG</button>
+      <p id="status" role="status"></p>
+    </fieldset>
+    <p class="fine">Original art and lettering only — no Rockstar logo, artwork or font. Fonts: Anton &amp; Pacifico (SIL OFL).</p>
   </section>
-  <canvas id="cover" width="1080" height="1080" aria-label="The cover"></canvas>
+
+  <section class="stage" aria-label="Live preview">
+    <canvas id="cover" width="1920" height="1080" aria-label="The cover preview"></canvas>
+    <p class="stagehint">Live preview — click any panel to crop it.</p>
+  </section>
 </main>
 <script type="module" src="./src/main.js"></script>
 </body>
