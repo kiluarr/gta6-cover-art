@@ -173,9 +173,23 @@ refreshPhotoList();
 const shot = new URLSearchParams(location.search).get('shot');
 if (shot) {
   runShot(shot, new URLSearchParams(location.search), async (sample, text, opts) => {
-    const img = await loadImage(sample);
-    state.photos = [img];
-    state.photoNames = ['sample'];
+    // A shot may load several photos (opts.photos) and assign each panel
+    // its own photo (opts.panelPhotos) and crop (opts.pan / opts.zoom).
+    const names = opts.photos ?? [sample.replace('samples/', '').replace('.jpg', '')];
+    const imgs = [];
+    for (const name of names) imgs.push(await loadImage(`samples/${name}.jpg`));
+    state.photos = imgs;
+    state.photoNames = names;
+    if (opts.panelPhotos) {
+      state.panelPhotos = Array.from({ length: 9 }, (_, i) => opts.panelPhotos[i] ?? 0);
+    }
+    if (opts.pan || opts.zoom) {
+      state.crops = Array.from({ length: 9 }, (_, i) => ({
+        zoom: opts.zoom ? (opts.zoom[i] ?? opts.zoom[0] ?? 100) : 100,
+        panX: 0,
+        panY: opts.pan ? (opts.pan[i] ?? opts.pan[0] ?? 0) : 0,
+      }));
+    }
     if (opts.layout) state.layout = opts.layout;
     if (opts.grade) state.grade = opts.grade;
     if (opts.size) {

@@ -55,11 +55,20 @@ export function panelRects(layout, w, h) {
       }
       return rows;
     }
+    case 'hero': {
+      // Hero: one big panel on top (70%) with a full-width strip below —
+      // a different geometry from 'full' (a single panel), so each of the
+      // six layouts really is its own arrangement.
+      const top = 0.7;
+      return [
+        [0, 0, 1, top],
+        [0, top + gap / h, 1, 1 - top - gap / h],
+      ];
+    }
     case 'full':
       return full;
     case 'tilt':
       return full;
-    case 'hero':
     default:
       return full;
   }
@@ -110,13 +119,27 @@ function gradeWash(ctx, grade, w, h) {
   ctx.fillRect(0, 0, w, h);
 }
 
+// A tiny seeded PRNG (mulberry32) so the grain is identical on every
+// redraw and export — the same cover always renders byte-identical grain.
+function seededRandom(seed) {
+  let a = seed >>> 0;
+  return () => {
+    a |= 0;
+    a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
 function sprinkleGrain(ctx, w, h) {
+  const rand = seededRandom(0xc0ffee);
   const step = Math.max(3, Math.round(w / 360));
   ctx.save();
   ctx.globalAlpha = 0.07;
   for (let y = 0; y < h; y += step) {
     for (let x = 0; x < w; x += step) {
-      const v = Math.floor(Math.random() * 255);
+      const v = Math.floor(rand() * 255);
       ctx.fillStyle = `rgb(${v},${v},${v})`;
       ctx.fillRect(x, y, step, step);
     }

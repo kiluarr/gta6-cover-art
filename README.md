@@ -17,6 +17,7 @@ Then open http://localhost:8080 in desktop Chrome. No build step, no network req
 ## How it works
 
 - `app/index.html` — the editor: photo picker, per-panel crop sliders, layout and grade pickers, title/subtitle fields, export size.
-- `app/src/cover.js` — the cover engine: panel geometry for 6 layouts, gradient-map grades, grain, vignette, and gradient-filled Anton lettering with a glowing Pacifico subtitle, all drawn on canvas.
+- `app/src/cover.js` — the cover engine: panel geometry for 6 layouts, gradient-map grades, grain, vignette, and gradient-filled Anton lettering with a glowing Pacifico subtitle, all drawn on canvas. Pan sliders run ±300 so a wide panel can be shifted far enough to keep a face in frame; grain uses a fixed-seed PRNG so exports are reproducible.
+- `app/src/shots.js` — fixed scenes for screenshots: one photo or several (`photo2` + `panels` per-panel photo map), with per-panel crop (`pan` / `zoom`) so a shot can frame each panel.
 - `app/src/main.js` — wires the page, reads photos with FileReader, and exports the cover at the chosen post size.
 - `main.ts` — the entry program: copies `app/` and `screenshots/` to `/output` and writes `dossier.json`.
